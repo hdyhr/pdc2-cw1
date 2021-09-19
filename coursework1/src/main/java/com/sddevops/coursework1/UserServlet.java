@@ -32,10 +32,7 @@ public class UserServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -57,6 +54,23 @@ public class UserServlet extends HttpServlet {
                 case "/update":
                     updateUser(request, response);
                     break;
+                case "/newItem":
+                    showNewItemForm(request, response);
+                    break;
+                case "/insertItem":
+                    insertItem(request, response);
+                    break;
+                case "/deleteItem":
+                    deleteItem(request, response);
+                    break;
+                case "/editItem":
+                    showEditItemForm(request, response);
+                    break;
+                case "/updateItem":
+                    updateItem(request, response);
+                    break;
+                case "/listItem":
+                	listItem(request,response);
                 default:
                     listUser(request, response);
                     break;
@@ -118,6 +132,62 @@ public class UserServlet extends HttpServlet {
 		        int id = Integer.parseInt(request.getParameter("id"));
 		        userCrud.deleteUser(id);
 		        response.sendRedirect("list");
+
+		    }
+	
+	private void listItem(HttpServletRequest request, HttpServletResponse response)
+		    throws SQLException, IOException, ServletException {
+		        List < Items > listItem = userCrud.selectAllItems();
+		        request.setAttribute("listItem", listItem);
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("list-item.jsp");
+		        dispatcher.forward(request, response);
+		    }
+	
+	private void showNewItemForm(HttpServletRequest request, HttpServletResponse response)
+		    throws ServletException, IOException {
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("item-form.jsp");
+		        dispatcher.forward(request, response);
+		    }
+	
+	private void showEditItemForm(HttpServletRequest request, HttpServletResponse response)
+		    throws SQLException, ServletException, IOException {
+		        int id = Integer.parseInt(request.getParameter("id"));
+		        Items existingItem = userCrud.selectItem(id);
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("item-form.jsp");
+		        request.setAttribute("item", existingItem);
+		        dispatcher.forward(request, response);
+
+		    }
+	
+	private void insertItem(HttpServletRequest request, HttpServletResponse response)
+		    throws SQLException, IOException {
+		        String itemName = request.getParameter("itemName");
+		        int quantity = Integer.parseInt(request.getParameter("quantity"));
+		        //String quantity = request.getParameter("quantity");
+		        double price = Double.parseDouble(request.getParameter("price"));
+		        //String price = request.getParameter("price");
+		        Items newItem = new Items(itemName, quantity, price);
+		        userCrud.insertItem(newItem);
+		        response.sendRedirect("listItem");
+		    }
+	
+	private void updateItem(HttpServletRequest request, HttpServletResponse response)
+		    throws SQLException, IOException {
+		        int id = Integer.parseInt(request.getParameter("id"));
+		        String itemName = request.getParameter("itemName");
+		        int quantity = Integer.parseInt(request.getParameter("quantity"));
+		        double price = Double.parseDouble(request.getParameter("price"));
+
+		        Items book2 = new Items(id, itemName, quantity, price);
+		        userCrud.updateItem(book2);
+		        response.sendRedirect("listItem");
+		    }
+	
+	private void deleteItem(HttpServletRequest request, HttpServletResponse response)
+		    throws SQLException, IOException {
+		        int id = Integer.parseInt(request.getParameter("id"));
+		        userCrud.deleteItem(id);
+		        response.sendRedirect("listItem");
 
 		    }
 

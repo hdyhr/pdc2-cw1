@@ -25,6 +25,15 @@ public class UserCrud {
 
     public UserCrud(){}
     
+    private static final String INSERT_ITEMS_SQL = "INSERT INTO items" + "  (itemName, quantity, price) VALUES " +
+            " (?, ?, ?);";
+
+    private static final String SELECT_ITEM_BY_ID = "select id,itemName,quantity,price from items where id =?";
+    private static final String SELECT_ALL_ITEMS = "select * from items";
+    private static final String DELETE_ITEMS_SQL = "delete from items where id = ?;";
+    private static final String UPDATE_ITEMS_SQL = "update items set itemName = ?,quantity= ?, price =? where id = ?;";
+
+    
     protected Connection getConnection() {
         Connection connection = null;
         try {
@@ -121,6 +130,93 @@ public class UserCrud {
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getAddress());
             statement.setInt(4, user.getId());
+
+            rowUpdated = statement.executeUpdate() > 0;
+        }
+        return rowUpdated;
+    }
+    
+    public void insertItem(Items items) throws SQLException {
+        System.out.println(INSERT_ITEMS_SQL);
+        // try-with-resource statement will auto close the connection.
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ITEMS_SQL)) {
+            preparedStatement.setString(1, items.getitemName());
+            preparedStatement.setInt(2, items.getQuantity());
+            preparedStatement.setDouble(3, items.getPrice());
+            System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+    }
+    
+    public Items selectItem(int id) {
+        Items items = null;
+        // Step 1: Establishing a Connection
+        try (Connection connection = getConnection();
+            // Step 2:Create a statement using connection object
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ITEM_BY_ID);) {
+            preparedStatement.setInt(1, id);
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                String itemName = rs.getString("itemName");
+                int quantity = rs.getInt("quantity");
+                double price = rs.getDouble("price");
+                items = new Items(id, itemName, quantity, price);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return items;
+    }
+    
+    public List < Items > selectAllItems() {
+
+        // using try-with-resources to avoid closing resources (boiler plate code)
+        List < Items > items = new ArrayList < > ();
+        // Step 1: Establishing a Connection
+        try (Connection connection = getConnection();
+
+            // Step 2:Create a statement using connection object
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ITEMS);) {
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String itemName = rs.getString("itemName");
+                int quantity = rs.getInt("quantity");
+                double price = rs.getDouble("price");
+                items.add(new Items(id, itemName, quantity, price));
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return items;
+    }
+    
+    public boolean deleteItem (int id) throws SQLException {
+        boolean rowDeleted;
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(DELETE_ITEMS_SQL);) {
+            statement.setInt(1, id);
+            rowDeleted = statement.executeUpdate() > 0;
+        }
+        return rowDeleted;
+    }
+    
+    public boolean updateItem(Items items) throws SQLException {
+        boolean rowUpdated;
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(UPDATE_ITEMS_SQL);) {
+            statement.setString(1, items.getitemName());
+            statement.setInt(2, items.getQuantity());
+            statement.setDouble(3, items.getPrice());
+            statement.setInt(4, items.getId());
 
             rowUpdated = statement.executeUpdate() > 0;
         }
