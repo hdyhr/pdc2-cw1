@@ -12,23 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sddevops.coursework1.UserCrud;
+import com.sddevops.coursework1.Crud;
 
 /**
  * Servlet implementation class UserServlet
  */
 @WebServlet("/")
-public class UserServlet extends HttpServlet {
+public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserCrud userCrud;
+	private Crud userCrud;
 	private LoginCrud loginCrud;
 	
 	public void init() {
-		userCrud = new UserCrud();
+		userCrud = new Crud();
 		loginCrud = new LoginCrud();
 	}
        
-    public UserServlet() {
+    public Servlet() {
         super();
     }
 
