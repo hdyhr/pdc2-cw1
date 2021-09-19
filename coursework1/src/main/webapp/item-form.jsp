@@ -4,7 +4,7 @@
         <html>
 
         <head>
-            <title>Item Management Application</title>
+            <title>Personal Shopper Management</title>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         </head>
 
@@ -13,7 +13,7 @@
             <header>
                 <nav class="navbar navbar-expand-md navbar-dark" style="background-color: tomato">
                     <div>
-                        <a href="https://www.javaguides.net" class="navbar-brand"> User Management App </a>
+                        <a href="https://www.javaguides.net" class="navbar-brand"> Personal Shopper Management </a>
                     </div>
 
                     <ul class="navbar-nav">

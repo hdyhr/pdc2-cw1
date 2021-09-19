@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sddevops.coursework1.UserCrud;
 
@@ -20,21 +21,19 @@ import com.sddevops.coursework1.UserCrud;
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserCrud userCrud;
+	private LoginCrud loginCrud;
 	
 	public void init() {
 		userCrud = new UserCrud();
+		loginCrud = new LoginCrud();
 	}
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public UserServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
+
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getServletPath();
 		try {
@@ -71,14 +70,40 @@ public class UserServlet extends HttpServlet {
                     break;
                 case "/listItem":
                 	listItem(request,response);
+                case "/list":
+                	listUser(request, response);
                 default:
-                    listUser(request, response);
+                    login(request, response);
                     break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
 		
+	}
+	
+	private void login(HttpServletRequest request, HttpServletResponse response)
+		throws SQLException, IOException, ServletException {
+		
+		String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        Admin admin = new Admin();
+        admin.setUsername(username);
+        admin.setPassword(password);
+
+        try {
+            if (loginCrud.validate(admin)) {
+            	RequestDispatcher dispatcher = request.getRequestDispatcher("/list");
+            	dispatcher.forward(request, response);
+            } else {
+                HttpSession session = request.getSession();         
+                response.sendRedirect("login.jsp");
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+        
 	}
 	
 	private void listUser(HttpServletRequest request, HttpServletResponse response)

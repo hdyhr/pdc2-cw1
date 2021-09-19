@@ -32,6 +32,8 @@ public class UserCrud {
     private static final String SELECT_ALL_ITEMS = "select * from items";
     private static final String DELETE_ITEMS_SQL = "delete from items where id = ?;";
     private static final String UPDATE_ITEMS_SQL = "update items set itemName = ?,quantity= ?, price =? where id = ?;";
+    
+    
 
     
     protected Connection getConnection() {
@@ -48,6 +50,7 @@ public class UserCrud {
         }
         return connection;
     }
+    
     
     public void insertUser(User user) throws SQLException {
         System.out.println(INSERT_USERS_SQL);
