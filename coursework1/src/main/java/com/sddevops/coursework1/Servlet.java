@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import com.sddevops.coursework1.Crud;
 
 /**
@@ -20,6 +19,7 @@ import com.sddevops.coursework1.Crud;
 @WebServlet("/")
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+  
 	private Crud userCrud;
 	private LoginCrud loginCrud;
 	
@@ -34,6 +34,7 @@ public class Servlet extends HttpServlet {
 
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getServletPath();
 		try {
@@ -82,6 +83,7 @@ public class Servlet extends HttpServlet {
 		
 	}
 	
+
 	private void login(HttpServletRequest request, HttpServletResponse response)
 		throws SQLException, IOException, ServletException {
 		
@@ -106,6 +108,7 @@ public class Servlet extends HttpServlet {
         
 	}
 	
+
 	private void listUser(HttpServletRequest request, HttpServletResponse response)
 		    throws SQLException, IOException, ServletException {
 		        List < User > listUser = userCrud.selectAllUsers();
