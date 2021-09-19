@@ -11,24 +11,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sddevops.coursework1.UserCrud;
+import com.sddevops.coursework1.UserItemCrud;
 
 /**
  * Servlet implementation class UserServlet
  */
 @WebServlet("/")
-public class UserServlet extends HttpServlet {
+public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserCrud userCrud;
+	private UserItemCrud userCrud;
 	
 	public void init() {
-		userCrud = new UserCrud();
+		userCrud = new UserItemCrud();
 	}
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserServlet() {
+    public Servlet() {
         super();
         // TODO Auto-generated constructor stub
     }
