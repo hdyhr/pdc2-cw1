@@ -10,8 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.sddevops.coursework1.UserItemCrud;
+import javax.servlet.http.HttpSession;
+import com.sddevops.coursework1.Crud;
 
 /**
  * Servlet implementation class UserServlet
@@ -19,22 +19,22 @@ import com.sddevops.coursework1.UserItemCrud;
 @WebServlet("/")
 public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserItemCrud userCrud;
+  
+	private Crud userCrud;
+	private LoginCrud loginCrud;
 	
 	public void init() {
-		userCrud = new UserItemCrud();
+		userCrud = new Crud();
+		loginCrud = new LoginCrud();
 	}
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public Servlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
+
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getServletPath();
 		try {
@@ -71,8 +71,10 @@ public class Servlet extends HttpServlet {
                     break;
                 case "/listItem":
                 	listItem(request,response);
+                case "/list":
+                	listUser(request, response);
                 default:
-                    listUser(request, response);
+                    login(request, response);
                     break;
             }
         } catch (SQLException ex) {
@@ -81,6 +83,32 @@ public class Servlet extends HttpServlet {
 		
 	}
 	
+
+	private void login(HttpServletRequest request, HttpServletResponse response)
+		throws SQLException, IOException, ServletException {
+		
+		String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        Admin admin = new Admin();
+        admin.setUsername(username);
+        admin.setPassword(password);
+
+        try {
+            if (loginCrud.validate(admin)) {
+            	RequestDispatcher dispatcher = request.getRequestDispatcher("/list");
+            	dispatcher.forward(request, response);
+            } else {
+                HttpSession session = request.getSession();         
+                response.sendRedirect("login.jsp");
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+        
+	}
+	
+
 	private void listUser(HttpServletRequest request, HttpServletResponse response)
 		    throws SQLException, IOException, ServletException {
 		        List < User > listUser = userCrud.selectAllUsers();
