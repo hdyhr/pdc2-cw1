@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.sddevops.coursework1.*;
 
-public class UserCrud {
+public class Crud {
 	private String jdbcURL = "jdbc:mysql://localhost:3306/demo?useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "";
@@ -23,7 +23,7 @@ public class UserCrud {
     private static final String DELETE_USERS_SQL = "delete from users where id = ?;";
     private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ?, address =? where id = ?;";
 
-    public UserCrud(){}
+    public Crud(){}
     
     private static final String INSERT_ITEMS_SQL = "INSERT INTO items" + "  (itemName, quantity, price) VALUES " +
             " (?, ?, ?);";
