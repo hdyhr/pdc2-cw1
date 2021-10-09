@@ -5,6 +5,7 @@
     <classes>
       <class name="com.sddevops.coursework1.AppTest"/>
       <class name="com.sddevops.coursework1.NewTestNG"/>
+      <class name="com.sddevops.coursework1.CrudTest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

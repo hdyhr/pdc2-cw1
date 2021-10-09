@@ -34,8 +34,6 @@ public class Crud {
     private static final String UPDATE_ITEMS_SQL = "update items set itemName = ?,quantity= ?, price =? where id = ?;";
     
     
-
-    
     protected Connection getConnection() {
         Connection connection = null;
         try {

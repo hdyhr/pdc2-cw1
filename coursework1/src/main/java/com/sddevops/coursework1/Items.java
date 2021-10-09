@@ -8,8 +8,6 @@ public class Items {
 	protected double price;
 	
 	
-	public Items() {}
-	
 	public Items(String itemName, int quantity, double price) {
 		super();
 		this.itemName =itemName;

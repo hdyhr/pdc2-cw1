@@ -8,8 +8,14 @@ public class Admin implements Serializable {
 	private String username;
     private String password;
 
+    public Admin() {
+    	
+    }
+    public Admin(String username, String password) {
+		// TODO Auto-generated constructor stub
+	}
 
-    public void setUsername(String username) {
+	public void setUsername(String username) {
         this.username = username;
     }
 

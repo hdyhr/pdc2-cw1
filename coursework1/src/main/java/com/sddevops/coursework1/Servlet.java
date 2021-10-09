@@ -107,7 +107,6 @@ public class Servlet extends HttpServlet {
         
         
 	}
-	
 
 	private void listUser(HttpServletRequest request, HttpServletResponse response)
 		    throws SQLException, IOException, ServletException {
