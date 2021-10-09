@@ -5,6 +5,21 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>coursework1</name>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    
+    <selenium.groupId>org.seleniumhq.selenium</selenium.groupId>
+    <selenium.artifactId>selenium-java</selenium.artifactId>
+    <selenium.version>2.53.1</selenium.version>
+    
+    <testng.groupId>org.testng</testng.groupId>
+    <testng.artifactId>testng</testng.artifactId>
+    <testng.version>6.9.10</testng.version>
+  </properties>
+  
   <dependencies>
   	<!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
 	<dependency>
@@ -36,6 +51,34 @@
 	    <version>1.2</version>
 	</dependency>
 	
+	<dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+	<dependency>
+	    <groupId>org.seleniumhq.selenium</groupId>
+	    <artifactId>selenium-java</artifactId>
+	    <version>3.141.59</version>
+	</dependency>
+	
+	<dependency>
+      	<groupId>${selenium.groupId}</groupId>
+      	<artifactId>${selenium.artifactId}</artifactId>
+     	<version>${selenium.version}</version>
+    </dependency>
+    
+    <dependency>
+      	<groupId>${testng.groupId}</groupId>
+      	<artifactId>${testng.artifactId}</artifactId>
+      	<version>${testng.version}</version>
+      	<scope>test</scope>
+      </dependency>
+    
+    
   </dependencies>
   <build>
     <plugins>
@@ -49,6 +92,15 @@
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.2.3</version>
+      </plugin>
+      <plugin>
+      	<artifactId>maven-surefire-plugin</artifactId>
+      	<version>2.22.1</version>
+      	<configuration>
+      		<suiteXmlFiles>
+      			<suiteXmlFile>testng.xml</suiteXmlFile>
+      		</suiteXmlFiles>
+      	</configuration>
       </plugin>
     </plugins>
     

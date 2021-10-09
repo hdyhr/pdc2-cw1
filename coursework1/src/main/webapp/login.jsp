@@ -21,7 +21,7 @@
     </tr>
 
    </table>
-   <input type="submit" value="Submit" />
+   <input type="submit" value="Submit" name="submit"/>
   </form>
  </div>
 </body>
