@@ -17,7 +17,7 @@ public class NewTestNG {
 	  @Test
 	  public void checkTitle() {
 		  //Load Personal Shopper Login Page
-		  webDriver.navigate().to("http://localhost:8080/coursework1/login.jsp");
+		  webDriver.navigate().to("http://localhost:8081/coursework1/login.jsp");
 		  
 		  
 		  //Assert the title to check that we are indeed in the correct website
