@@ -18,9 +18,21 @@
     <testng.groupId>org.testng</testng.groupId>
     <testng.artifactId>testng</testng.artifactId>
     <testng.version>6.9.10</testng.version>
+    
+    <sonar.java.coveragePLugin>jacoco</sonar.java.coveragePLugin>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <sonar.language>java</sonar.language>
+    
   </properties>
   
   <dependencies>
+  	<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+	<dependency>
+	    <groupId>org.jacoco</groupId>
+	    <artifactId>jacoco-maven-plugin</artifactId>
+	    <version>0.8.7</version>
+	</dependency>
+  	
   	<dependency>
 	    <groupId>org.junit.jupiter</groupId>
 	    <artifactId>junit-jupiter</artifactId>
@@ -83,18 +95,38 @@
       	<version>${testng.version}</version>
       	<scope>test</scope>
       </dependency>
+    <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>4.0.1</version>
+	    <scope>provided</scope>
+	</dependency>
     
     
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
-        <configuration>
-          <release>15</release>
-        </configuration>
-      </plugin>
+    	<plugin>
+    		<groupId>org.jacoco</groupId>
+	    	<artifactId>jacoco-maven-plugin</artifactId>
+	    	<version>0.8.7</version>
+	    	<executions>
+	    		<execution>
+	    			<id>prepare-agent</id>
+	    			<goals>
+	    				<goal>prepare-agent</goal>
+	    			</goals>
+		    	</execution>
+		    	<execution>
+		    		<id>report</id>
+		    		<phase>verify</phase>
+		    		<goals>
+		    			<goal>report</goal>
+		    		</goals>
+		    	</execution>
+		    </executions>
+	    </plugin>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.2.3</version>
@@ -107,6 +139,10 @@
       			<suiteXmlFile>testng.xml</suiteXmlFile>
       		</suiteXmlFiles>
       	</configuration>
+      </plugin>
+      <plugin>
+      	<artifactId>maven-compiler-plugin</artifactId>
+      	<version>3.8.0</version>
       </plugin>
     </plugins>
     
